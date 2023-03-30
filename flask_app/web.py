@@ -11,6 +11,7 @@ from flasgger import Swagger
 from flask import redirect
 from flask import jsonify
 
+from markupsafe import escape
 from sensible.loginit import logger
 from nlib import csvops
 from nlib import utils
@@ -34,6 +35,14 @@ def home():
     """/ Route will redirect to API Docs: /apidocs"""
 
     return redirect("/apidocs")
+
+
+@app.route('/hello')
+def hello():
+    """/hello Route will display Hello World! or Hello {name parameter value}!"""
+
+    name = request.args.get("name", "World")
+    return f'Hello, {escape(name)}!'
 
 
 @app.route("/favicon.ico")
